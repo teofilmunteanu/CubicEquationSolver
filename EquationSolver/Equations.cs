@@ -47,6 +47,15 @@ namespace EquationSolver
             d = x4;
         }
 
+        bool checkSolution(EcGr3 ec, Complex x)
+        {
+            if(ec.a*Complex.Pow(x,3) + ec.b*Complex.Pow(x,2) + ec.c*x + ec.d == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static Complex[] roots(EcGr3 e)
         {
             Complex[] x = new Complex[3];
@@ -70,39 +79,40 @@ namespace EquationSolver
                 x[1] = 0;
                 x[2] = 0;
             }
-            else //Coeficienti Reali
-            if (a.Im == 0 && b.Im == 0 && c.Im == 0 && d.Im == 0) 
-            {
-                if (b == 0 && c == 0) //ecuatie de forma: ax^3 = d
-                {
-                    Complex[] j = new Complex[]{
-                        1,
-                        Complex.setReIm(-1.0 / 2, 1 * Math.Sqrt(3) / 2),
-                        Complex.setReIm(-1.0 / 2, -1 * Math.Sqrt(3) / 2)
-                    };
+            /* else //Coeficienti Reali
 
-                    for (int k = 0; k < 3; k++)
-                    {
-                        x[k] = -1 * (Complex.Cbrt(d/a) * j[k]);
-                    }
-                }
-                else
-                {
-                    Complex cosPhi = ((3 * q) / (2 * p)) * (1 / r);
+             if (a.Im == 0 && b.Im == 0 && c.Im == 0 && d.Im == 0) 
+             {
+                 if (b == 0 && c == 0) //ecuatie de forma: ax^3 = d
+                 {
+                     Complex[] j = new Complex[]{
+                         1,
+                         Complex.setReIm(-1.0 / 2, 1 * Math.Sqrt(3) / 2),
+                         Complex.setReIm(-1.0 / 2, -1 * Math.Sqrt(3) / 2)
+                     };
 
-                    System.Numerics.Complex phi;
-                    phi = System.Numerics.Complex.Acos(cosPhi.Re);
+                     for (int k = 0; k < 3; k++)
+                     {
+                         x[k] = -1 * (Complex.Cbrt(d/a) * j[k]);
+                     }
+                 }
+                 else
+                 {
+                     Complex cosPhi = ((3 * q) / (2 * p)) * (1 / r);
 
-                    Complex C = new Complex();
-                    for (int k = 0; k < 3; k++)
-                    {
-                        C.Re = System.Numerics.Complex.Cos(phi / 3 + 2 * k * Math.PI / 3).Real;
-                        C.Im = System.Numerics.Complex.Cos(phi / 3 + 2 * k * Math.PI / 3).Imaginary;
-                        x[k] = 2 * r * C - b / (3 * a);
-                    }
-                }
-                
-            }
+                     System.Numerics.Complex phi;
+                     phi = System.Numerics.Complex.Acos(cosPhi.Re);
+
+                     Complex C = new Complex();
+                     for (int k = 0; k < 3; k++)
+                     {
+                         C.Re = System.Numerics.Complex.Cos(phi / 3 + 2 * k * Math.PI / 3).Real;
+                         C.Im = System.Numerics.Complex.Cos(phi / 3 + 2 * k * Math.PI / 3).Imaginary;
+                         x[k] = 2 * r * C - b / (3 * a);
+                     }
+                 }
+
+             }*/
             else //Coeficienti Complecsi
             {
                 if (p == 0 && q == 0)
@@ -121,8 +131,8 @@ namespace EquationSolver
                 {
                     Complex[] j = new Complex[]{
                         1,
-                        Complex.setReIm((double)(-1 / 2), 1 * Math.Sqrt(3) / 2),
-                        Complex.setReIm((double)(-1 / 2), -1 * Math.Sqrt(3) / 2)
+                        Complex.setReIm((double)(-1d / 2), 1 * Math.Sqrt(3) / 2),
+                        Complex.setReIm((double)(-1d / 2), -1 * Math.Sqrt(3) / 2)
                     };
 
                     EcGr2 tEc = new EcGr2(1, q, -(p * p * p) / 27);
@@ -133,12 +143,13 @@ namespace EquationSolver
                     Complex[] alpha = new Complex[3];
                     for (int i = 0; i < 3; i++)
                     {
-                        alpha[i] = Complex.Cbrt(t[1]) * j[i];
+                        alpha[i] = Complex.Cbrt(t[0]) * j[i];
                     }
 
                     for (int k = 0; k < 3; k++)
                     {
-                        Complex y = (Complex.Pow(j[1], k) * alpha[k]) - (Complex.Pow(j[1], 2 * k) * (p / (3 * alpha[k])));
+                        //Complex y = (Complex.Pow(j[0], k) * alpha[k]) - (Complex.Pow(j[0], 2 * k) * (p / (3 * alpha[k])));
+                        Complex y = alpha[k] - p / (3 * alpha[k]);
                         x[k] = y - b / (3 * a);
                     }
                 }
