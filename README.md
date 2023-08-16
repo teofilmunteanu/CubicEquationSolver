@@ -1,3 +1,3 @@
 # CubicEquationSolver
 
-Solves equations up to the 3rd degree.
+Solves 3rd degree equations with complex numbers.
